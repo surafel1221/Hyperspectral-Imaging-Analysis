@@ -1,6 +1,7 @@
 import tkinter as tk
-from tkinter import Label,Button,simpledialog
+from tkinter import Label,Button,simpledialog, messagebox  
 from Scanning import start_scan
+from Example.Run_example import load_dispaly_Cube
 
 
     
@@ -29,7 +30,13 @@ def on_start_scanning_click():
 
 
 def on_run_example_click():
-    print("Run Example clicked!")
+   try:
+        image_path = 'C:\\Users\\suraf\\New folder\\92AV3C (2).lan'
+
+        load_dispaly_Cube(image_path)
+        print("Run Example operation completed successfully!")
+   except Exception as e:
+        print(f"Error during Run Example operation: {e}")
 
 def on_view_cube_click():
     print("View Cube clicked!")
