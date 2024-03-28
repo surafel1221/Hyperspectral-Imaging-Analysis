@@ -4,6 +4,8 @@ import numpy as np
 import cv2
 import subprocess
 from time import sleep
+import spectral.io.envi as envi
+from spectral import save_image
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -33,7 +35,17 @@ def construct_data_cube(images_directory, number_of_images):
             logger.error(f"Failed to load image: {img_path}")
     data_cube = np.stack(images, axis=-1)  
     return data_cube
-
+def save_cube(data_cube, outputfilename):
+    metadata = {
+        'description': 'Hyperspectral data cube',
+        'bands': data_cube.shape[2],
+        'lines': data_cube.shape[0],
+        'samples': data_cube.shape[1],
+        'interleave': 'bil',
+        'datatype': 'uint16' # Change as per your data type
+    }
+    save_image(outputfilename, data_cube, metadata=metadata, force=True)
+    
 def start_scan(camera_fps, rail_speed, rail_length):
     output_dir = "images"
     os.makedirs(output_dir, exist_ok=True)
@@ -61,6 +73,9 @@ def start_scan(camera_fps, rail_speed, rail_length):
     
     data_cube = construct_data_cube(output_dir, number_of_frames)
     logger.info(f"Data cube shape: {data_cube.shape}")
+    
+    output_filename = "output_data.lan"  
+    save_cube(data_cube, output_filename)
 
 
 if __name__ == "__main__":
