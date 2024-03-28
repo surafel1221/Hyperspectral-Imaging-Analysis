@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import Label,Button,simpledialog
-from src import start_scan
+from Scanning import start_scan
 
 
     
