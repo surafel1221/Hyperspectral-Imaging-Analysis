@@ -1,10 +1,32 @@
 import tkinter as tk
-from tkinter import Label,Button
-def on_start_button_click():
-    print("Start button clicked!") 
+from tkinter import Label,Button,simpledialog
+from src import start_scan
+
+
     
 def on_start_scanning_click():
-    print("Start Scanning clicked!")
+    camera_fps = simpledialog.askinteger("Input","Enter the Camera FPS:",
+                                parent=root, minvalue=1,maxvalue=100)
+    
+    rail_speed = simpledialog.askfloat("Input", "Enter the speed of the rail in mm/s (e.g., 1 for 1mm/s):",
+                                       parent=root, minvalue=0.1, maxvalue=100.0)
+   
+    rail_length = simpledialog.askfloat("Input", "Enter the total length of the scan area in mm (e.g., 2360 for 2.36 meters):",
+                                        parent=root, minvalue=1.0, maxvalue=10000.0)
+
+
+    if camera_fps is not None and rail_speed is not None and rail_length is not None:
+        try:
+            start_scan(camera_fps, rail_speed, rail_length)
+            print("Scanning started!")
+        except Exception as e:
+            print(f"Error during scanning: {e}")
+    else:
+        print("Scanning canceled or incomplete input.")
+
+
+
+
 
 def on_run_example_click():
     print("Run Example clicked!")

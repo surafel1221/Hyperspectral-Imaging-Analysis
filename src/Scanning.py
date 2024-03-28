@@ -34,21 +34,11 @@ def construct_data_cube(images_directory, number_of_images):
     data_cube = np.stack(images, axis=-1)  
     return data_cube
 
-def main():
+def start_scan(camera_fps, rail_speed, rail_length):
     output_dir = "images"
     os.makedirs(output_dir, exist_ok=True)
     
-    try:
-        camera_fps = int(input("Enter the desired camera FPS (Frames Per Second): "))
-        rail_speed = float(input("Enter the speed of the rail in mm/s (e.g., 1 for 1mm/s): "))
-        rail_length = float(input("Enter the total length of the scan area in mm (e.g., 2360 for 2.36 meters): "))
-
-        if camera_fps <= 0 or rail_speed <= 0 or rail_length <= 0:
-            raise ValueError("FPS, rail speed, and rail length must be positive numbers.")
-
-    except ValueError as e:
-        logger.error(f"Invalid input: {e}")
-        return
+    
 
     distance=rail_speed / camera_fps
     number_of_frames = int(rail_length / distance)
@@ -74,4 +64,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    start_scan()
