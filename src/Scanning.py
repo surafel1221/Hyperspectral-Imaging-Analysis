@@ -5,7 +5,9 @@ import cv2
 import subprocess
 from time import sleep
 import spectral.io.envi as envi
-from spectral import save_image
+from spectral.io.envi import save_image
+
+
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)

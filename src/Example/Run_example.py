@@ -1,15 +1,21 @@
+from spectral import open_image
 import matplotlib.pyplot as plt
-from spectral import *
 from matplotlib.widgets import Slider
 
 def load_dispaly_Cube(image_path):
-    img= open_image(image_path).load()
+    img = open_image(image_path).load()
+
+    # Normalization function
+    def normalize_band(band):
+        return (band - band.min()) / (band.max() - band.min())
+
     initial_band = 0
-    
+    normalized_img = normalize_band(img[:, :, initial_band])
+
     fig, ax = plt.subplots()
     plt.subplots_adjust(left=0.25, bottom=0.25)  # Adjust subplot to make room for the slider
     
-    band_display = plt.imshow(img[:, :, initial_band], cmap='gray')
+    band_display = plt.imshow(normalized_img, cmap='gray')
     ax.set_title(f'Band {initial_band+1}')
     
     ax_band = plt.axes([0.25, 0.1, 0.65, 0.03], facecolor='lightgoldenrodyellow')
@@ -24,7 +30,8 @@ def load_dispaly_Cube(image_path):
     
     def update(val):
         band = band_slider.val
-        band_display.set_data(img[:, :, band])
+        normalized_img = normalize_band(img[:, :, band])
+        band_display.set_data(normalized_img)
         ax.set_title(f'Band {band+1}')
         fig.canvas.draw_idle()
     

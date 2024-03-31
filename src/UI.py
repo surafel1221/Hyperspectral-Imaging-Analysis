@@ -31,7 +31,7 @@ def on_start_scanning_click():
 
 def on_run_example_click():
    try:
-        image_path = 'C:\\Users\\suraf\\New folder\\92AV3C (2).lan'
+        image_path = 'C:\\Users\\suraf\\Hyperspectral-Imaging-Analysis\\src\\Example\\92AV3C (2).lan'
 
         load_dispaly_Cube(image_path)
         print("Run Example operation completed successfully!")
