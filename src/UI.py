@@ -30,13 +30,13 @@ def on_start_scanning_click():
         print("Scanning canceled or incomplete input.")
 
 
-        image_path = 'C:\\Users\\suraf\\Hyperspectral-Imaging-Analysis\\src\\Example\\92AV3C (2).lan'
+        image_path = 'C:\\Users\\suraf\\Desktop\\Hyperspectral-Imaging-Analysis\\src\\Example\\92AV3C (2).lan'
 
 
 
 def on_run_example_click():
     try:
-        image_path = 'C:\\Users\\suraf\\Hyperspectral-Imaging-Analysis\\src\\Example\\92AV3C (2).lan'
+        image_path = 'C:\\Users\\suraf\\Desktop\\Hyperspectral-Imaging-Analysis\\src\\Example\\92AV3C (2).lan'
 
         new_window = tk.Toplevel(root)
         new_window.title("Display Options")
