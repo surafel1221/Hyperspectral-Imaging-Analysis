@@ -2,10 +2,14 @@ import tkinter as tk
 from tkinter import Label,Button,simpledialog, messagebox  
 from Scanning import start_scan
 from Example.Run_example import load_dispaly_Cube
+from Example.Run_example import Display_RGB
 
 
     
 def on_start_scanning_click():
+    
+    
+    
     camera_fps = simpledialog.askinteger("Input","Enter the Camera FPS:",
                                 parent=root, minvalue=1,maxvalue=100)
     
@@ -26,17 +30,33 @@ def on_start_scanning_click():
         print("Scanning canceled or incomplete input.")
 
 
+        image_path = 'C:\\Users\\suraf\\Hyperspectral-Imaging-Analysis\\src\\Example\\92AV3C (2).lan'
 
 
 
 def on_run_example_click():
-   try:
+    try:
         image_path = 'C:\\Users\\suraf\\Hyperspectral-Imaging-Analysis\\src\\Example\\92AV3C (2).lan'
 
-        load_dispaly_Cube(image_path)
+        new_window = tk.Toplevel(root)
+        new_window.title("Display Options")
+        new_window.geometry("300x150")  # You can adjust the size as needed
+
+        button_font = ("Arial", 12)
+        button_bg = "light blue"
+        button_fg = "black"
+
+        raw_cube_btn = tk.Button(new_window, text="Display Raw Cube", font=button_font, bg=button_bg, fg=button_fg, 
+                                 command=lambda: load_dispaly_Cube(image_path))
+        raw_cube_btn.pack(pady=10)  
+        rgb_btn = tk.Button(new_window, text="Display RGB", font=button_font, bg=button_bg, fg=button_fg, 
+                            command=lambda: Display_RGB(image_path, root))
+        rgb_btn.pack(pady=10)  
+
         print("Run Example operation completed successfully!")
-   except Exception as e:
+    except Exception as e:
         print(f"Error during Run Example operation: {e}")
+ 
 
 def on_view_cube_click():
     print("View Cube clicked!")
@@ -69,6 +89,7 @@ def main():
         ("View Cube", on_view_cube_click),
         ("Exit", on_exit_click)
     ]
+    
 
     for i, (text, command) in enumerate(buttons):
         btn = Button(root, text=text, font=button_font, command=command, bg=button_bg, fg=button_fg)
