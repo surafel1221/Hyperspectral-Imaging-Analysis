@@ -61,7 +61,6 @@ def start_scan(camera_fps, rail_speed, rail_length):
     
     ser = serial.Serial('/dev/ttyACM0', 115200)
     time.sleep(2)
-    ser.write(b'YOUR_START_COMMAND_HERE\n')
     
     ser.write(b'$H\n')
     time.sleep(10)
