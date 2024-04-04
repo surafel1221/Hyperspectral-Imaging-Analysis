@@ -46,7 +46,7 @@ def save_cube(data_cube, outputfilename):
         'lines': data_cube.shape[0],
         'samples': data_cube.shape[1],
         'interleave': 'bil',
-        'datatype': 'uint16' # Change as per your data type
+        'datatype': 'uint16' # Change 
     }
     save_image(outputfilename, data_cube, metadata=metadata, force=True)
     
