@@ -65,11 +65,14 @@ def start_scan(camera_fps, rail_speed, rail_length):
     ser.write(b'$H\n')
     time.sleep(10)
     
+    ser.write(b'G92 X0 Y0 Z0\n')
+
+    
     print(f"Distance between captures: {distance:.2f} mm")
     print(f"Number of frames to capture: {number_of_frames}")
     
     #based on what the user inputed 
-    ser.write(b'G01 F{:.0f}\n'.format(rail_speed).encode())
+    ser.write(f'G01 F{rail_speed}\n'.encode())
 
     
     libcamera_options = {'--width': 1280, '--height': 720, '--framerate': str(camera_fps)}
@@ -84,8 +87,8 @@ def start_scan(camera_fps, rail_speed, rail_length):
             break
         sleep(1/camera_fps)  
         
-        ser.write(b'G01 F0\n')
-        ser.close()
+    ser.write(b'G01 F0\n')
+    ser.close()
     
     data_cube = construct_data_cube(output_dir, number_of_frames)
     logger.info(f"Data cube shape: {data_cube.shape}")
