@@ -74,7 +74,6 @@ def start_scan(camera_fps, rail_speed, rail_length):
     
     libcamera_options = {'--width': 1280, '--height': 720, '--framerate': str(camera_fps)}
     
-    breaktime = 1 / camera_fps 
     
     
    
