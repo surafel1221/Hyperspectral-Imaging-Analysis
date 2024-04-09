@@ -65,7 +65,7 @@ def on_exit_click():
     root.destroy()
 
 def on_click_alinmnet():
-    print("clicked")
+    Alignment()
     
         
 def main():
