@@ -63,6 +63,9 @@ def on_view_cube_click():
 
 def on_exit_click():
     root.destroy()
+
+def on_click_alinmnet():
+    print("clicked")
     
         
 def main():
@@ -84,6 +87,7 @@ def main():
     button_fg = "black"
 
     buttons = [
+        ("Alignment", on_click_alinmnet),
         ("Start Scanning", on_start_scanning_click),
         ("Run Example", on_run_example_click),
         ("View Cube", on_view_cube_click),
