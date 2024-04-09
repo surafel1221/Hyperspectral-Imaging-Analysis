@@ -1,4 +1,6 @@
 import os
+import serial
+import time
 import logging
 import numpy as np
 import cv2
@@ -44,7 +46,7 @@ def save_cube(data_cube, outputfilename):
         'lines': data_cube.shape[0],
         'samples': data_cube.shape[1],
         'interleave': 'bil',
-        'datatype': 'uint16' # Change as per your data type
+        'datatype': 'uint16' # Change 
     }
     save_image(outputfilename, data_cube, metadata=metadata, force=True)
     
@@ -57,21 +59,36 @@ def start_scan(camera_fps, rail_speed, rail_length):
     distance=rail_speed / camera_fps
     number_of_frames = int(rail_length / distance)
     
+    ser = serial.Serial('/dev/ttyACM0', 115200)
+    time.sleep(2)
     
+    ser.write(b'$H\n')
+    time.sleep(10)
+    
+    ser.write(b'G92 X0 Y0 Z0\n')
+
     
     print(f"Distance between captures: {distance:.2f} mm")
     print(f"Number of frames to capture: {number_of_frames}")
     
+    #based on what the user inputed 
+    ser.write(f'G01 F{rail_speed}\n'.encode())
+
+    
     libcamera_options = {'--width': 1280, '--height': 720, '--framerate': str(camera_fps)}
-    breaktime = 1 / camera_fps 
+    
     
     
    
     for i in range(number_of_frames):
         if not capture_image(i, output_dir, libcamera_options):
             logger.error("Failed to capture image, stopping.")
+            ser.write(b'G01 F0\n')
             break
-        sleep(breaktime)  
+        sleep(1/camera_fps)  
+        
+    ser.write(b'G01 F0\n')
+    ser.close()
     
     data_cube = construct_data_cube(output_dir, number_of_frames)
     logger.info(f"Data cube shape: {data_cube.shape}")
