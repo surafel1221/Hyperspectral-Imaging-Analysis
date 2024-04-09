@@ -49,6 +49,23 @@ def save_cube(data_cube, outputfilename):
         'datatype': 'uint16' # Change 
     }
     save_image(outputfilename, data_cube, metadata=metadata, force=True)
+
+
+def Alignment():
+ ser = serial.Serial('/dev/ttyACM0',115200)
+ time.sleep(2)
+
+ ser.write(b'$X\n')
+ ser.write(b'$H')
+ time.sleep(10)
+
+ ser.close()
+
+
+
+
+
+
     
 def start_scan(camera_fps, rail_speed, rail_length):
     output_dir = "images"
