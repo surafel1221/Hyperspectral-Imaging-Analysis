@@ -9,7 +9,6 @@ from spectral import open_image, imshow
 def load_dispaly_Cube(image_path):
     img = open_image(image_path).load()
 
-    # Normalization function
     def normalize_band(band):
         return (band - band.min()) / (band.max() - band.min())
 
